@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Plus, X, Upload, Package } from 'lucide-react';
-import axios from 'axios';
+import api from '../../api/client';
 import toast from 'react-hot-toast';
 
 const AddProduct = () => {
@@ -79,7 +79,7 @@ const AddProduct = () => {
         tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : []
       };
 
-      const response = await axios.post('/api/products', productData);
+      const response = await api.post('/api/products', productData);
       toast.success('Product created successfully!');
       navigate('/retailer/products');
     } catch (error) {

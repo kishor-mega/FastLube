@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Package, Star, Phone, MapPin, Mail } from 'lucide-react';
-import axios from 'axios';
+import api from '../api/client';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const ProductDetail = () => {
@@ -16,7 +16,7 @@ const ProductDetail = () => {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`/api/products/${id}`);
+      const response = await api.get(`/api/products/${id}`);
       setProduct(response.data);
     } catch (error) {
       console.error('Error fetching product:', error);
@@ -105,9 +105,9 @@ const ProductDetail = () => {
               </div>
 
               <div className="flex items-center space-x-4">
-                <span className="text-3xl font-bold text-gray-900">${product.price}</span>
+                <span className="text-3xl font-bold text-gray-900">Inr{product.price}</span>
                 {product.originalPrice && product.originalPrice > product.price && (
-                  <span className="text-xl text-gray-500 line-through">${product.originalPrice}</span>
+                  <span className="text-xl text-gray-500 line-through">Inr{product.originalPrice}</span>
                 )}
               </div>
 

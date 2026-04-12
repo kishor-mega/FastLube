@@ -13,7 +13,7 @@ import {
   ShoppingCart,
   Users
 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../api/client';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const response = await axios.get('/api/retailers/dashboard');
+      const response = await api.get('/api/retailers/dashboard');
       setDashboardData(response.data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);

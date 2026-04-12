@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Plus, X, Upload, Package, ArrowLeft } from 'lucide-react';
-import axios from 'axios';
+import api from '../../api/client';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
@@ -38,7 +38,7 @@ const EditProduct = () => {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(`/api/products/${id}`);
+      const response = await api.get(`/api/products/${id}`);
       const product = response.data;
       
       // Populate form fields
@@ -126,7 +126,7 @@ const EditProduct = () => {
         tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : []
       };
 
-      await axios.put(`/api/products/${id}`, productData);
+      await api.put(`/api/products/${id}`, productData);
       toast.success('Product updated successfully!');
       navigate('/retailer/products');
     } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, Edit, Trash2, Eye, Package, Search } from 'lucide-react';
-import axios from 'axios';
+import api from '../../api/client';
 import toast from 'react-hot-toast';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
@@ -22,7 +22,7 @@ const Products = () => {
         params.append('status', statusFilter);
       }
 
-      const response = await axios.get(`/api/products/retailer/my-products?${params}`);
+      const response = await api.get(`/api/products/retailer/my-products?${params}`);
       setProducts(response.data.products);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -38,7 +38,7 @@ const Products = () => {
     }
 
     try {
-      await axios.delete(`/api/products/${productId}`);
+      await api.delete(`/api/products/${productId}`);
       toast.success('Product deleted successfully');
       fetchProducts();
     } catch (error) {
@@ -49,7 +49,7 @@ const Products = () => {
 
   const handleToggleStatus = async (productId, currentStatus) => {
     try {
-      await axios.put(`/api/products/${productId}`, {
+      await api.put(`/api/products/${productId}`, {
         isActive: !currentStatus
       });
       toast.success(`Product ${!currentStatus ? 'activated' : 'deactivated'} successfully`);

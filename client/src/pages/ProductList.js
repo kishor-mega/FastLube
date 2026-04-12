@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Filter, Package } from 'lucide-react';
-import axios from 'axios';
+import api from '../api/client';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const ProductList = () => {
@@ -31,7 +31,7 @@ const ProductList = () => {
       if (selectedCategory) params.append('category', selectedCategory);
       if (selectedBrand) params.append('brand', selectedBrand);
 
-      const response = await axios.get(`/api/products?${params}`);
+      const response = await api.get(`/api/products?${params}`);
       setProducts(response.data.products);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -42,7 +42,7 @@ const ProductList = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('/api/products/categories/list');
+      const response = await api.get('/api/products/categories/list');
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -51,7 +51,7 @@ const ProductList = () => {
 
   const fetchBrands = async (category) => {
     try {
-      const response = await axios.get(`/api/products/brands/${category}`);
+      const response = await api.get(`/api/products/brands/${category}`);
       setBrands(response.data);
     } catch (error) {
       console.error('Error fetching brands:', error);
