@@ -61,6 +61,58 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Static paths must be registered before /:id
+router.get('/categories/list', async (req, res) => {
+  try {
+    const categories = await Product.distinct('category');
+    res.json(categories);
+  } catch (error) {
+    console.error('Categories fetch error:', error);
+    res.status(500).json({ message: 'Server error while fetching categories' });
+  }
+});
+
+router.get('/brands/:category', async (req, res) => {
+  try {
+    const brands = await Product.distinct('brand', {
+      category: req.params.category,
+      isActive: true,
+    });
+    res.json(brands);
+  } catch (error) {
+    console.error('Brands fetch error:', error);
+    res.status(500).json({ message: 'Server error while fetching brands' });
+  }
+});
+
+router.get('/retailer/my-products', retailerAuth, async (req, res) => {
+  try {
+    const { page = 1, limit = 10, status } = req.query;
+
+    const query = { retailer: req.user._id };
+    if (status === 'active') query.isActive = true;
+    if (status === 'inactive') query.isActive = false;
+
+    const products = await Product.find(query)
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const total = await Product.countDocuments(query);
+
+    res.json({
+      products,
+      totalPages: Math.ceil(total / limit),
+      currentPage: parseInt(page),
+      total,
+    });
+  } catch (error) {
+    console.error('Retailer products fetch error:', error);
+    res.status(500).json({ message: 'Server error while fetching retailer products' });
+  }
+});
+
 // Get product by ID (public)
 router.get('/:id', async (req, res) => {
   try {
@@ -189,35 +241,6 @@ router.delete('/:id', retailerAuth, async (req, res) => {
   }
 });
 
-// Get retailer's products (retailer only)
-router.get('/retailer/my-products', retailerAuth, async (req, res) => {
-  try {
-    const { page = 1, limit = 10, status } = req.query;
-    
-    const query = { retailer: req.user._id };
-    if (status === 'active') query.isActive = true;
-    if (status === 'inactive') query.isActive = false;
-
-    const products = await Product.find(query)
-      .sort({ createdAt: -1 })
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .exec();
-
-    const total = await Product.countDocuments(query);
-
-    res.json({
-      products,
-      totalPages: Math.ceil(total / limit),
-      currentPage: parseInt(page),
-      total
-    });
-  } catch (error) {
-    console.error('Retailer products fetch error:', error);
-    res.status(500).json({ message: 'Server error while fetching retailer products' });
-  }
-});
-
 // Update product quantity (retailer only)
 router.patch('/:id/quantity', retailerAuth, [
   body('quantity').isInt({ min: 0 }).withMessage('Quantity must be a non-negative integer')
@@ -249,31 +272,6 @@ router.patch('/:id/quantity', retailerAuth, [
   } catch (error) {
     console.error('Quantity update error:', error);
     res.status(500).json({ message: 'Server error while updating quantity' });
-  }
-});
-
-// Get product categories
-router.get('/categories/list', async (req, res) => {
-  try {
-    const categories = await Product.distinct('category');
-    res.json(categories);
-  } catch (error) {
-    console.error('Categories fetch error:', error);
-    res.status(500).json({ message: 'Server error while fetching categories' });
-  }
-});
-
-// Get brands by category
-router.get('/brands/:category', async (req, res) => {
-  try {
-    const brands = await Product.distinct('brand', { 
-      category: req.params.category,
-      isActive: true 
-    });
-    res.json(brands);
-  } catch (error) {
-    console.error('Brands fetch error:', error);
-    res.status(500).json({ message: 'Server error while fetching brands' });
   }
 });
 

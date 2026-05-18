@@ -2,26 +2,20 @@
   "name": "fastlube-ecommerce",
   "version": "1.0.0",
   "description": "Dual-sided e-commerce website for Automobile Spares and Lubricants",
-  "main": "server/index.js",
+  "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && npm run dev",
-    "client": "cd client && npm start",
-    "build": "cd client && npm run build",
-    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install"
   },
-  "keywords": [
-    "ecommerce",
-    "automobile",
-    "spares",
-    "lubricants"
-  ],
+  "keywords": ["ecommerce", "automobile", "spares", "lubricants"],
   "author": "FastLube Team",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "multer": "^2.0.2"
   }
 }

@@ -1,0 +1,18 @@
+# Render blueprint for this backend (place at repo root for Blueprint, or use Dashboard with Root Directory = backend)
+# https://render.com
+services:
+  - type: web
+    name: fastlube-api
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        sync: false
