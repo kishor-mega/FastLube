@@ -105,9 +105,9 @@ const ProductDetail = () => {
               </div>
 
               <div className="flex items-center space-x-4">
-                <span className="text-3xl font-bold text-gray-900">Inr{product.price}</span>
+                <span className="text-3xl font-bold text-gray-900">₹{product.price.toLocaleString('en-IN')}</span>
                 {product.originalPrice && product.originalPrice > product.price && (
-                  <span className="text-xl text-gray-500 line-through">Inr{product.originalPrice}</span>
+                  <span className="text-xl text-gray-500 line-through">₹{product.originalPrice.toLocaleString('en-IN')}</span>
                 )}
               </div>
 

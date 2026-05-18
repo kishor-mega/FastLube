@@ -279,7 +279,7 @@ const EditProduct = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span className="text-gray-500">$</span>
+                      <span className="text-gray-500">₹</span>
                     </div>
                     <input
                       id="price"
@@ -308,7 +308,7 @@ const EditProduct = () => {
                   </label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span className="text-gray-500">$</span>
+                      <span className="text-gray-500">₹</span>
                     </div>
                     <input
                       id="originalPrice"

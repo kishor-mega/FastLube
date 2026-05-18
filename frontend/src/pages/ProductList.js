@@ -188,7 +188,7 @@ const ProductList = () => {
                   </p>
                   <div className="mt-2 flex items-center justify-between">
                     <span className="text-lg font-bold text-gray-900">
-                      ${product.price}
+                      ₹{product.price.toLocaleString('en-IN')}
                     </span>
                     <span className="text-sm text-gray-500">
                       Qty: {product.quantity}

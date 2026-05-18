@@ -5,7 +5,7 @@ import {
   Package, 
   TrendingUp, 
   AlertTriangle, 
-  DollarSign, 
+  IndianRupee, 
   Plus, 
   Eye, 
   Edit,
@@ -87,8 +87,8 @@ const Dashboard = () => {
     },
     {
       title: 'Inventory Value',
-      value: `$${stats.totalInventoryValue.toLocaleString()}`,
-      icon: DollarSign,
+      value: `₹${stats.totalInventoryValue.toLocaleString('en-IN')}`,
+      icon: IndianRupee,
       color: 'bg-purple-500',
       change: '+15%',
       changeType: 'positive'
@@ -195,7 +195,7 @@ const Dashboard = () => {
                   <div className="text-right">
                     <p className="font-semibold text-gray-900">{category.count} products</p>
                     <p className="text-sm text-gray-600">
-                      ${category.totalValue.toLocaleString()}
+                      ₹{category.totalValue.toLocaleString('en-IN')}
                     </p>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <span className="text-sm font-medium text-gray-900">
-                      ${product.price}
+                      ₹{product.price.toLocaleString('en-IN')}
                     </span>
                     <span className="text-sm text-gray-500">
                       Qty: {product.quantity}
